@@ -7,7 +7,7 @@ ReactKT aims to ease front end developpement using :
 
 # Why ?
 
-Mainly because I don't Kotlin, nor React, nor Material Design. So, it's fun :)
+Mainly because I don't know Kotlin, nor React, nor Material Design. So, it's fun :)
 
 # Status
 
