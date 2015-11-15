@@ -19,5 +19,14 @@ package fr.javatic.reactkt.material.components
 class TextareaProps(
         val cols: Int? = null,
         val rows: Int? = null,
-        val defaultValue: String? = null
-) : AbstractInputfieldProps()
+        val defaultValue: String? = null,
+        className: String? = null,
+        id: String? = null,
+        label: String? = null,
+        floatingLabel: Boolean? = null,
+        error: String? = null,
+        expandable: Boolean? = null,
+        button: Boolean? = null,
+        icon: Boolean? = null,
+        expandableHolder: Boolean? = null
+) : AbstractInputfieldProps(className, id, label, floatingLabel, error, expandable, button, icon, expandableHolder)

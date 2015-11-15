@@ -18,17 +18,18 @@ package fr.javatic.reactkt.material
 
 import fr.javatic.reactkt.core.Component
 import fr.javatic.reactkt.core.ReactDOM
+import org.w3c.dom.Element
 
 abstract class MaterialComponent<P> : Component<P, Any>() {
-    fun componentDidMount(): Unit {
-        val node = ReactDOM.findDOMNode(this)
+    override fun componentDidMount(): Unit {
+        val node = ReactDOM.findDOMNode<Element>(this)
         if (node != null) {
             MDL.upgradeElement(node)
         }
     }
 
-    fun componentWillUnmount(): Unit {
-        val node = ReactDOM.findDOMNode(this)
+    override fun componentWillUnmount(): Unit {
+        val node = ReactDOM.findDOMNode<Element>(this)
         if (node != null) {
             MDL.downgradeElements(node)
         }

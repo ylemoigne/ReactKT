@@ -17,11 +17,12 @@
 package fr.javatic.reactktSample.core
 
 import fr.javatic.reactkt.core.Component
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactktSample.core.interfaces.TodoFooterProps
 
 class TodoFooter : Component<TodoFooterProps, Any>() {
-    fun render(): Any {
+    override fun render(): ReactElement {
         var activeTodoWord = Utils.pluralize(this.props.count, "item");
 
         var clearButton = if (this.props.completedCount > 0) {

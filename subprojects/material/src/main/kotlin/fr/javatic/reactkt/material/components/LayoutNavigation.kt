@@ -16,11 +16,12 @@
 
 package fr.javatic.reactkt.material.components
 
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactkt.material.MaterialComponent
 
 class LayoutNavigation : MaterialComponent<LayoutNavigationProps>() {
-    fun render(): Any {
+    override fun render(): ReactElement {
         return ktx {
             nav("className" to "mdl-navigation") {
                 for (link in props.links) {

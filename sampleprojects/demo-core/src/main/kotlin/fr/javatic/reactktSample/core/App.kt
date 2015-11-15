@@ -16,14 +16,13 @@
 
 package fr.javatic.reactktSample.core
 
-import fr.javatic.reactkt.core.Component
-import fr.javatic.reactkt.core.ReactDOM
+import fr.javatic.reactkt.core.*
 import fr.javatic.reactkt.core.binding.toJsObject
 import fr.javatic.reactkt.core.events.FormEvent
 import fr.javatic.reactkt.core.events.KeyboardEvent
-import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactkt.core.utils.KeyCode
 import fr.javatic.reactktSample.core.interfaces.*
+import org.w3c.dom.html.HTMLInputElement
 
 class App : Component<AppProps, AppState>() {
     companion object {
@@ -33,15 +32,13 @@ class App : Component<AppProps, AppState>() {
     }
 
     init {
-        this.state = AppState(
-                nowShowing = App.ALL_TODOS,
-                editing = null)
+        this.state = AppState(nowShowing = App.ALL_TODOS)
     }
 
-    fun componentDidMount() {
-        var router = Router(listOf("/" to { setState(AppState(editing = state.editing, nowShowing = App.ALL_TODOS)) },
-                "/active" to { setState(AppState(editing = state.editing, nowShowing = App.ACTIVE_TODOS)) },
-                "/completed" to { setState(AppState(editing = state.editing, nowShowing = App.COMPLETED_TODOS)) }
+    override fun componentDidMount() {
+        var router = Router(listOf("/" to { setStatePartial { p(AppState::nowShowing to App.ALL_TODOS) } },
+                "/active" to { setStatePartial { p(AppState::nowShowing to App.ACTIVE_TODOS) } },
+                "/completed" to { setStatePartial { p(AppState::nowShowing to App.COMPLETED_TODOS) } }
         ).toJsObject())
         router.init("/");
     }
@@ -53,18 +50,16 @@ class App : Component<AppProps, AppState>() {
 
         event.preventDefault();
 
-        val node: dynamic = ReactDOM.findDOMNode(this.refs.get("newField"))
-        var value = node.value.trim();
-        if (value != null) {
+        val node = ReactDOM.findDOMNode<HTMLInputElement>(this.refs.get("newField"))
+        val value = node?.value?.trim()
+        if (value != null && !value.isBlank()) {
             this.props.model.addTodo(value)
-            node.value = ""
+            node?.value = ""
         }
     }
 
     fun toggleAll(event: FormEvent) {
-        var target: dynamic = event.target;
-        var checked = target.checked;
-        this.props.model.toggleAll(checked);
+        this.props.model.toggleAll((event.target as HTMLInputElement).checked)
     }
 
     fun toggle(todoToToggle: Todo) {
@@ -76,23 +71,23 @@ class App : Component<AppProps, AppState>() {
     }
 
     fun edit(todo: Todo) {
-        this.setState(AppState(editing = todo.id, nowShowing = this.state.nowShowing));
+        this.setStatePartial { p(AppState::editing to todo.id) }
     }
 
     fun save(todoToSave: Todo, text: String) {
         this.props.model.save(todoToSave, text);
-        this.setState(AppState(editing = null, nowShowing = this.state.nowShowing));
+        this.setStatePartial { p(AppState::editing to null) }
     }
 
     fun cancel() {
-        this.setState(AppState(editing = null, nowShowing = this.state.nowShowing));
+        this.setStatePartial { p(AppState::editing to null) }
     }
 
     fun clearCompleted() {
         this.props.model.clearCompleted();
     }
 
-    fun render(): Any {
+    override fun render(): ReactElement {
         val todos = this.props.model.todos;
 
         var shownTodos = todos.filter { todo ->
@@ -111,7 +106,7 @@ class App : Component<AppProps, AppState>() {
                         onDestroy = { destroy(todo) },
                         onEdit = { edit(todo) },
                         editing = state.editing == todo.id,
-                        onSave = { save(todo, "") },
+                        onSave = { e:String->save(todo, e) },
                         onCancel = { e -> cancel() }))
             }
         }

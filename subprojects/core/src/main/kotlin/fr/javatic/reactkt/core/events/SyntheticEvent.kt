@@ -16,17 +16,20 @@
 
 package fr.javatic.reactkt.core.events
 
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventTarget
+
 interface SyntheticEvent {
     val bubbles: Boolean
-    val cancelable: Boolean;
-    val currentTarget: dynamic;//EventTarget;
-    val defaultPrevented: Boolean;
-    val eventPhase: Number;
-    val isTrusted: Boolean;
-    val nativeEvent: dynamic;//Event;
+    val cancelable: Boolean
+    val currentTarget: EventTarget
+    val defaultPrevented: Boolean
+    val eventPhase: Number
+    val isTrusted: Boolean
+    val nativeEvent: Event
     fun preventDefault(): Unit
     fun stopPropagation(): Unit
-    val target: dynamic;//EventTarget;
-    val timeStamp: Date;
-    val type: String;
+    val target: EventTarget
+    val timeStamp: Date
+    val type: String
 }

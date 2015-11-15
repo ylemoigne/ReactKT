@@ -16,4 +16,4 @@
 
 package fr.javatic.reactktSample.core.interfaces
 
-class AppState(val editing: String?, val nowShowing: String?)
+class AppState(val editing: String?=null, val nowShowing: String?)

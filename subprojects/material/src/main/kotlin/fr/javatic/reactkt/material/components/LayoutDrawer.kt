@@ -16,9 +16,12 @@
 
 package fr.javatic.reactkt.material.components
 
+import fr.javatic.reactkt.core.ReactElement
+import fr.javatic.reactkt.core.ktx
+
 class LayoutDrawer : fr.javatic.reactkt.material.MaterialComponent<fr.javatic.reactkt.material.components.LayoutDrawerProps>() {
-    fun render(): Any {
-        return fr.javatic.reactkt.core.ktx {
+    override fun render(): ReactElement {
+        return ktx {
             div("className" to "mdl-layout__drawer") {
                 span("className" to "mdl-layout-title") { +props.title }
                 component(::LayoutNavigation, LayoutNavigationProps(links = *props.links))

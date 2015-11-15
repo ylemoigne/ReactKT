@@ -17,16 +17,31 @@
 package fr.javatic.reactkt.core
 
 import fr.javatic.reactkt.core.binding.JsObject
+import fr.javatic.reactkt.core.utils.StateBuilder
 
 @native("React.Component")
 abstract class Component<P, S>() : ReactElement {
+    /**
+     * Warning : Object prototype will be lost
+     */
     @native("setState")
-    fun setState(state: S): Unit
+    fun setState(state: dynamic): Unit
 
     open var props: P
     var state: S
     var refs: JsObject<ReactElement>
 
-    //    @native("shouldComponentUpdate")
-    //    open fun shouldComponentUpdate(nextProps : P, nextState : S):Boolean
+    open fun componentDidMount(): Unit
+    open fun componentWillUnmount(): Unit
+    open fun componentDidUpdate(prevProps: P): Unit
+    open fun shouldComponentUpdate(nextProps: P, nextState: S): Boolean
+
+    abstract fun render(): ReactElement
+
+}
+
+fun <P, S> Component<P, S>.setStatePartial(init: StateBuilder<S>.() -> Unit): Unit {
+    val builder = StateBuilder<S>()
+    builder.init()
+    setState(builder.toJsObject())
 }

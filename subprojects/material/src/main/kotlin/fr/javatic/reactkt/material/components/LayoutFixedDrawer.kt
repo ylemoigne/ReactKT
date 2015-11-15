@@ -16,11 +16,12 @@
 
 package fr.javatic.reactkt.material.components
 
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactkt.material.MaterialComponent
 
 class LayoutFixedDrawer : MaterialComponent<LayoutDrawerProps>() {
-    fun render(): Any {
+    override fun render(): ReactElement {
         return ktx {
             div("className" to "mdl-layout mdl-js-layout mdl-layout--fixed-drawer") {
                 component(::LayoutDrawer, LayoutDrawerProps(title = props.title, links = *props.links))

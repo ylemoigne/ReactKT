@@ -16,6 +16,8 @@
 
 package org.w3c.dom.html
 
+import org.w3c.dom.html.typed.Direction
+
 /**
  *  Form control.  Note. Depending upon the environment in which the page is
  * being viewed, the value property may be read-only for the file upload
@@ -25,6 +27,12 @@ package org.w3c.dom.html
  * <p>See also the <a href='http://www.w3.org/TR/2000/CR-DOM-Level-2-20000510'>Document Object Model (DOM) Level 2 Specification</a>.
  */
 interface HTMLInputElement : HTMLElement {
+    //------------------------------------------------------------------
+    // NOT FROM JDK
+    fun setSelectionRange(selectionStart:Int, selectionEnd:Int, direction:Direction?=null):Unit
+
+    //------------------------------------------------------------------
+
     /**
      * When the `type` attribute of the element has the value
      * "Text", "File" or "Password", this represents the HTML value attribute
@@ -96,9 +104,7 @@ interface HTMLInputElement : HTMLElement {
      * change the state of the form control, but do not change the value of
      * the HTML value attribute of the element.
      */
-    fun getChecked(): Boolean
-
-    fun setChecked(checked: Boolean)
+    var checked: Boolean
 
     /**
      * The control is unavailable in this context. See the  disabled
@@ -185,9 +191,7 @@ interface HTMLInputElement : HTMLElement {
      * represents the HTML value attribute of the element. See the  value
      * attribute definition in HTML 4.0.
      */
-    fun getValue(): String
-
-    fun setValue(value: String)
+    var value:String
 
     /**
      * Removes keyboard focus from this element.

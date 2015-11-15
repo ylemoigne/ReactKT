@@ -19,7 +19,7 @@ package fr.javatic.reactktSample.core.interfaces
 class TodoItemProps(val key: String,
                     val todo: Todo,
                     val editing: Boolean?,
-                    val onSave: (v: Any) -> Unit,
+                    val onSave: (v: String) -> Unit,
                     val onDestroy: () -> Unit,
                     val onEdit: () -> Unit,
                     val onCancel: (event: Any) -> Unit,

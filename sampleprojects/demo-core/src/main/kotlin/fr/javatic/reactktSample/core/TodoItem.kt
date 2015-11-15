@@ -18,6 +18,7 @@ package fr.javatic.reactktSample.core
 
 import fr.javatic.reactkt.core.Component
 import fr.javatic.reactkt.core.ReactDOM
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.events.FormEvent
 import fr.javatic.reactkt.core.events.KeyboardEvent
 import fr.javatic.reactkt.core.ktx
@@ -25,15 +26,16 @@ import fr.javatic.reactkt.core.utils.Classes
 import fr.javatic.reactkt.core.utils.KeyCode
 import fr.javatic.reactktSample.core.interfaces.TodoItemProps
 import fr.javatic.reactktSample.core.interfaces.TodoItemState
+import org.w3c.dom.html.HTMLInputElement
 
 class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, TodoItemState>() {
     init {
         state = TodoItemState(this.props.todo.title)
     }
 
-    fun handleSubmit(event: FormEvent?) {
-        if (event != null) {
-            val value = this.state.editText.trim()
+    fun handleSubmit() {
+        val value = this.state.editText.trim()
+        if (value.isNotBlank()) {
             this.props.onSave(value)
             this.setState(TodoItemState(value))
         } else {
@@ -51,7 +53,7 @@ class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, Tod
             this.setState(TodoItemState(this.props.todo.title))
             this.props.onCancel(event)
         } else if (event.keyCode == KeyCode.ENTER) {
-            this.handleSubmit(null)
+            this.handleSubmit()
         }
     }
 
@@ -67,7 +69,7 @@ class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, Tod
      * just use it as an example of how little code it takes to get an order
      * of magnitude performance improvement.
      */
-    fun shouldComponentUpdate(nextProps: TodoItemProps, nextState: TodoItemState): Boolean {
+    override fun shouldComponentUpdate(nextProps: TodoItemProps, nextState: TodoItemState): Boolean {
         return (nextProps.todo != this.props.todo) ||
                 (nextProps.editing != this.props.editing) ||
                 (nextState.editText != this.state.editText)
@@ -79,15 +81,19 @@ class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, Tod
      * For more info refer to notes at https://facebook.github.io/react/docs/component-api.html#setstate
      * and https://facebook.github.io/react/docs/component-specs.html#updating-componentdidupdate
      */
-    fun componentDidUpdate(prevProps: TodoItemProps) {
+    override fun componentDidUpdate(prevProps: TodoItemProps):Unit {
         if (!(prevProps.editing ?: false) && this.props.editing ?: false) {
-            val node: dynamic = ReactDOM.findDOMNode(this.refs.get("editField"))
+            val node = ReactDOM.findDOMNode<HTMLInputElement>(this.refs.get("editField"))
+            if(node==null){
+                return;
+            }
+
             node.focus()
             node.setSelectionRange(node.value.length, node.value.length)
         }
     }
 
-    fun render(): Any {
+    override fun render(): ReactElement {
         val classes = Classes()
         classes.add(this.props.todo.completed, "completed")
         classes.add(this.props.editing, "editing")
@@ -99,7 +105,7 @@ class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, Tod
                     label("onDoubleClick" to { e: KeyboardEvent -> handleEdit() }) { +props.todo.title }
                     button("className" to "destroy", "onClick" to props.onDestroy)
                 }
-                input("ref" to "editField", "className" to "edit", "value" to state.editText, "onBlur" to { e: FormEvent -> handleSubmit(e) }, "onChange" to { e: FormEvent -> handleChange(e) }, "onKeyDown" to { e: KeyboardEvent -> handleKeyDown(e) })
+                input("ref" to "editField", "className" to "edit", "value" to state.editText, "onBlur" to { e: FormEvent -> handleSubmit() }, "onChange" to { e: FormEvent -> handleChange(e) }, "onKeyDown" to { e: KeyboardEvent -> handleKeyDown(e) })
             }
         }
     }

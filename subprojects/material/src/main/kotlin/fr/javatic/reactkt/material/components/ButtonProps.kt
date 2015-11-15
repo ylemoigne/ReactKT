@@ -28,5 +28,6 @@ class ButtonProps(
         val accent: Boolean? = null,
         val icon: Boolean? = null,
         val mini: Boolean? = null,
-        val disabled: Boolean? = false
+        val disabled: Boolean? = false,
+        val buttonFor: String? = null
 ) : Props()

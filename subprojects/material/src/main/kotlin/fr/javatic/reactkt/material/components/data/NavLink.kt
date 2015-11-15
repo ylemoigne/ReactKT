@@ -16,4 +16,4 @@
 
 package fr.javatic.reactkt.material.components.data
 
-data class NavLink(val key: String, val title: String, val href: String?)
+data class NavLink(val key: String, val title: String, val href: String?=null)

@@ -16,12 +16,13 @@
 
 package fr.javatic.reactkt.material.components
 
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactkt.core.utils.Classes
 import fr.javatic.reactkt.material.MaterialComponent
 
 class Badge : MaterialComponent<BadgeProps>() {
-    fun render(): Any {
+    override fun render(): ReactElement {
         val classes = Classes("mdl-badge", props.className)
         classes.add(props.nobackground, "mdl-badge--no-background")
         classes.add(props.overlap, "mdl-badge--overlap")

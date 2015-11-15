@@ -21,5 +21,5 @@ import org.w3c.dom.Element
 
 object ReactDOM {
     fun render(element: ReactElement, container: Element, callback: (() -> Unit)? = null) = InternalReactDOM.render(element, container, callback)
-    fun findDOMNode(component: ReactElement?): Element? = InternalReactDOM.findDOMNode(component)
+    fun <T:Element> findDOMNode(component: ReactElement?): T? = InternalReactDOM.findDOMNode(component)
 }

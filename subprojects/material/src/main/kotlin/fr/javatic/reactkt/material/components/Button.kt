@@ -16,12 +16,13 @@
 
 package fr.javatic.reactkt.material.components
 
+import fr.javatic.reactkt.core.ReactElement
 import fr.javatic.reactkt.core.ktx
 import fr.javatic.reactkt.core.utils.Classes
 import fr.javatic.reactkt.material.MaterialComponent
 
 class Button : MaterialComponent<ButtonProps>() {
-    fun render(): Any {
+    override fun render(): ReactElement {
         val classes = Classes("mdl-button", "mdl-js-button raised", props.className)
         classes.add(props.floating, "mdl-button--fab")
         classes.add(props.colored, "mdl-button--colored")

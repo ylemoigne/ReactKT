@@ -28,7 +28,7 @@ abstract class AbstractInputfield<P : AbstractInputfieldProps> : MaterialCompone
 
     abstract fun createConcreteField(id: String): ReactElement
 
-    fun render(): Any {
+    override fun render(): ReactElement {
         val classes = Classes("mdl-textfield", "mdl-js-textfield", props.className)
         classes.add(this.props.floatingLabel, "mdl-textfield--floating-label")
         classes.add(this.props.expandable, "mdl-textfield--expandable")

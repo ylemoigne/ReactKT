@@ -1,11 +1,3 @@
-rootProject.name = 'ReactKT'
-
-include 'subprojects:w3c-dom-html'
-
-include 'subprojects:core'
-include 'subprojects:material'
-
-include 'sampleprojects:demo-core'
 /*
  * Copyright 2015 Yann Le Moigne
  *
@@ -22,4 +14,12 @@ include 'sampleprojects:demo-core'
  * limitations under the License.
  */
 
-//include 'sampleprojects:material'
+rootProject.name = 'ReactKT'
+
+include 'subprojects:w3c-dom-html'
+
+include 'subprojects:core'
+include 'subprojects:material'
+
+include 'sampleprojects:demo-core'
+include 'sampleprojects:demo-material'

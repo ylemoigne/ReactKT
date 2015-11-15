@@ -27,5 +27,5 @@ internal object InternalReactDOM {
     //    fun boolean unmountComponentAtNode(container:Element)
 
     // Fixme : Should be component but I struggle with typesystem limitation
-    fun findDOMNode(component: ReactElement?): Element?
+    fun <T:Element> findDOMNode(component: ReactElement?): T?
 }
