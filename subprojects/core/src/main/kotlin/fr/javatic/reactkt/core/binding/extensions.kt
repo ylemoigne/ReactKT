@@ -24,10 +24,8 @@ fun Iterable<Pair<String, Any?>>.toJsObject(): dynamic {
     return inst
 }
 
+// NOTE: in fact we generally don't need as Collection<T> already has toTypedArray that does what we need and most data
+//  structures are Collections rather than Iterable.
 internal fun Iterable<Any>.toJsArray(): dynamic {
-    val array = JsArray()
-
-    this.forEach { e -> array.push(e) }
-
-    return array
+    return toList().toTypedArray()
 }
