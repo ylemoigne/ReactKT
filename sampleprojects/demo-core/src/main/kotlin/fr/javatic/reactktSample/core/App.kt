@@ -22,7 +22,7 @@ import fr.javatic.reactkt.core.events.FormEvent
 import fr.javatic.reactkt.core.events.KeyboardEvent
 import fr.javatic.reactkt.core.utils.KeyCode
 import fr.javatic.reactktSample.core.interfaces.*
-import org.w3c.dom.html.HTMLInputElement
+import org.w3c.dom.*
 
 class App : Component<AppProps, AppState>() {
     companion object {

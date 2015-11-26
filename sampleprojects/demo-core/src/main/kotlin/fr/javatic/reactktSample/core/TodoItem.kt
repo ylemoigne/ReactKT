@@ -26,7 +26,7 @@ import fr.javatic.reactkt.core.utils.Classes
 import fr.javatic.reactkt.core.utils.KeyCode
 import fr.javatic.reactktSample.core.interfaces.TodoItemProps
 import fr.javatic.reactktSample.core.interfaces.TodoItemState
-import org.w3c.dom.html.HTMLInputElement
+import org.w3c.dom.HTMLInputElement
 
 class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, TodoItemState>() {
     init {
@@ -84,7 +84,7 @@ class TodoItem(override var props: TodoItemProps) : Component<TodoItemProps, Tod
     override fun componentDidUpdate(prevProps: TodoItemProps):Unit {
         if (!(prevProps.editing ?: false) && this.props.editing ?: false) {
             val node = ReactDOM.findDOMNode<HTMLInputElement>(this.refs.get("editField"))
-            if(node==null){
+            if (node == null) {
                 return;
             }
 
